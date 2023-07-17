@@ -9,12 +9,12 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
   if (basicAuth) {
-    let username = process.env.USER;
-    let password = process.env.PASSWORD;
+    let {SERVICE_USER,SERVICE_PASSCODE} = process.env;
     const authValue = basicAuth.split(" ")[1];
-    const [user, pwd] = atob(authValue).split(":");
+    const [username, passcode] = atob(authValue).split(":");
+    
 
-    if (user === username && pwd === password) {
+    if (username === SERVICE_USER && passcode === SERVICE_PASSCODE) {
       return NextResponse.next();
     }
   }

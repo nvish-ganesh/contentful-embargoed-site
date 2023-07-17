@@ -1,11 +1,12 @@
 import { getAllBlogContent, getBlogContent } from "@/lib/content";
 import Image from "next/image";
 
-export default function Blob({ content }) {
+export default function Blog({ content }) {
+  console.log("Blog component content", content);
   return (
     <main className="max-w-[52rem] mx-auto px-4 pb-28 sm:px-6 md:px-8 xl:px-12 lg:max-w-6xl">
       <BlogHeader {...content.fields} />
-      <ThumbnailImage {...content.fields} />
+      {/* <ThumbnailImage {...content.fields} /> */}
     </main>
   );
 }
@@ -13,10 +14,8 @@ export default function Blob({ content }) {
 function BlogHeader({ title, categoryTag }) {
   return (
     <header className="py-16 sm:text-left">
-      <p className="text-lg text-slate-700 dark:text-slate-400">
-        {categoryTag}
-      </p>
-      <h1 className="mb-4 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabold dark:text-slate-200">
+      <p className="text-lg text-slate-700 ">{categoryTag}</p>
+      <h1 className="mb-4 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabol">
         {title}
       </h1>
     </header>
@@ -24,7 +23,6 @@ function BlogHeader({ title, categoryTag }) {
 }
 
 function ThumbnailImage({ thumbnailImage }) {
-  console.log("thumbnailImage", thumbnailImage);
   return (
     <Image
       src={`https:${thumbnailImage.fields.image.fields.file.url}`}
@@ -36,8 +34,8 @@ function ThumbnailImage({ thumbnailImage }) {
 }
 
 export const getStaticPaths = async (context) => {
+  console.log("=== getStaticPaths");
   let { items } = await getAllBlogContent();
-  // console.log("content here", items);
 
   const paths = items.map((item) => {
     return {
@@ -54,8 +52,10 @@ export const getStaticPaths = async (context) => {
 };
 
 export const getStaticProps = async (context) => {
+  console.log("=== getStaticProps");
   let slug = context.params.slug;
   const entries = await getBlogContent(slug);
-  console.log("getStaticProps content", entries.items[0]);
-  return { props: { content: entries.items[0] } };
+  console.log("entries", entries);
+
+  return { props: { content: entries.items?.[0] } };
 };
