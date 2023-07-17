@@ -2,7 +2,6 @@ import { getAllBlogContent, getBlogContent } from "@/lib/content";
 import Image from "next/image";
 
 export default function Blog({ content }) {
-  console.log("Blog component content", content);
   return (
     <main className="max-w-[52rem] mx-auto px-4 pb-28 sm:px-6 md:px-8 xl:px-12 lg:max-w-6xl">
       <BlogHeader {...content.fields} />
@@ -34,7 +33,6 @@ function ThumbnailImage({ thumbnailImage }) {
 }
 
 export const getStaticPaths = async (context) => {
-  console.log("=== getStaticPaths");
   let { items } = await getAllBlogContent();
 
   const paths = items.map((item) => {
@@ -52,10 +50,7 @@ export const getStaticPaths = async (context) => {
 };
 
 export const getStaticProps = async (context) => {
-  console.log("=== getStaticProps");
   let slug = context.params.slug;
   const entries = await getBlogContent(slug);
-  console.log("entries", entries);
-
   return { props: { content: entries.items?.[0] } };
 };

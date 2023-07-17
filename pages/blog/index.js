@@ -1,7 +1,7 @@
 import { getAllBlogContent } from "@/lib/content";
 import Link from "next/link";
 
-export default function BLogIndex({ content }) {
+export default function BlogIndex({ content }) {
   return (
     <main className="max-w-[52rem] mx-auto px-4 pb-28 sm:px-6 md:px-8 xl:px-12 lg:max-w-6xl">
       <BlogHeader />
