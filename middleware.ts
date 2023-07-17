@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
-  matcher: ["/"],
+  matcher: ["/", "/customer"],
 };
 
 export function middleware(req: NextRequest) {
@@ -9,10 +9,9 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
   if (basicAuth) {
-    let {SERVICE_USER,SERVICE_PASSCODE} = process.env;
+    let { SERVICE_USER, SERVICE_PASSCODE } = process.env;
     const authValue = basicAuth.split(" ")[1];
     const [username, passcode] = atob(authValue).split(":");
-    
 
     if (username === SERVICE_USER && passcode === SERVICE_PASSCODE) {
       return NextResponse.next();
