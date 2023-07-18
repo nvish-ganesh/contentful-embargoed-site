@@ -57,8 +57,8 @@ function HeroSuccessStories({ heroSuccessStories }) {
   );
 }
 
-export const getStaticProps = async (args) => {
-  let entry = await getCustomerContent();
+export const getStaticProps = async (context) => {
+  let entry = await getCustomerContent(context.preview);
   let stringifyEntry = contentService(JSON.stringify(entry));
   return { props: { content: JSON.parse(stringifyEntry) } };
 };
